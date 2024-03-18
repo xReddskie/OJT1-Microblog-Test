@@ -20,3 +20,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
+
+# Set permissions on the Laravel storage directory
+RUN chmod -R 777 /var/www/html/storage/logs \
+    chown -R www-data:www-data /var/www/html/storage/logs
