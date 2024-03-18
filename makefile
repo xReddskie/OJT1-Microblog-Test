@@ -1,19 +1,22 @@
-.PHONY: clone build init-env set-permissions restart
-
-clone:
-	git clone https://github.com/XPERIA679/OJT1-Microblog
+BASE_DIR := $(shell pwd)
 
 build:
-	docker compose up -d --build
+	docker-compose up -d --build
 
-init-env:
+setup-permissions:
+	sudo chmod -R 777 $(BASE_DIR)/src
+	docker-compose exec php chmod -R 777 /var/www/html/storage/logs
+	docker-compose exec php chown -R www-data:www-data /var/www/html/storage/logs
+
+copy-env:
+	cp $(BASE_DIR)/.env $(BASE_DIR)/src/.env
+
+laravel-project:
 	docker-compose exec php composer create-project laravel/laravel /var/www/html/
 
-set-permissions:
-	sudo chmod -R 777 src
-	cp OJT1-Microblog/src/.env ./
+migrate:
+	docker-compose exec php php /var/www/html/artisan migrate
 
-restart:
-	docker compose down && docker compose up -d --build
-
-all: clone build init-env set-permissions restart
+down-up:
+	docker-compose down && docker-compose up -d --build
+	
