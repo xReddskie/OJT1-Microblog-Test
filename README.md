@@ -12,6 +12,10 @@ Requirements
 Docker Desktop
 Ubuntu/WSL - local terminal: wsl --install -d Ubuntu
 
+Note:
+Must enable ubuntu in Docker Desktop Settings
+-> Settings -> Resources -> WSL Integration -> Check Ubuntu -> Apply and Restart
+
 ```
     
 ## Deployment
@@ -30,6 +34,7 @@ Vscode terminal:
 - git init
 - git clone -b Docker https://github.com/XPERIA679/OJT1-Microblog
 - cd OJT1-Microblog
+- sudo apt install make
 - make build 
 ```
 ```bash
@@ -38,9 +43,11 @@ Build Laravel Project:
 - make laravel-project
 - make permissions
 - make copy-env
-- uncomment node
+ -> uncomment node service in docker-compose.yml
 - make down-up
+- make migrate
 ```
+DONE!
 ## Authors
 
 - [@xReddskie](https://www.github.com/xReddskie)
